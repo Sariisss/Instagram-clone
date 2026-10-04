@@ -1,0 +1,43 @@
+# Dependencias
+node_modules/
+
+# Credenciales / entorno (NUNCA subir). Solo .env.example se versiona.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Expo / Metro
+.expo/
+.expo-shared/
+web-build/
+.metro-health-check*
+
+# Builds
+dist/
+build/
+android/
+ios/
+*.apk
+*.aab
+*.ipa
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+*.orig.*
+
+# TypeScript / logs / caché
+*.tsbuildinfo
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

@@ -1,0 +1,43 @@
+{
+  "name": "instagram-clone",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "start:tailscale": "node scripts/start-tailscale.js",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "fix-deps": "expo install --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@expo-google-fonts/grand-hotel": "*",
+    "@expo/vector-icons": "*",
+    "@react-native-community/netinfo": "*",
+    "@supabase/supabase-js": "^2.58.0",
+    "expo": "~57.0.0",
+    "expo-constants": "~57.0.0",
+    "expo-crypto": "~57.0.0",
+    "expo-file-system": "~57.0.0",
+    "expo-font": "~57.0.0",
+    "expo-image-manipulator": "~57.0.0",
+    "expo-image-picker": "~57.0.0",
+    "expo-linear-gradient": "~57.0.0",
+    "expo-linking": "~57.0.0",
+    "expo-router": "~57.0.0",
+    "expo-sqlite": "~57.0.0",
+    "expo-status-bar": "~57.0.0",
+    "expo-video": "~57.0.5",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0",
+    "react-native-url-polyfill": "*",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.0",
+    "typescript": "~6.0.0"
+  }
+}

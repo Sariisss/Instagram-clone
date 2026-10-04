@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Instagram Clone",
+    "slug": "instagram-clone",
+    "scheme": "instagramclone",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": ["expo-router", "expo-sqlite"],
+    "ios": { "supportsTablet": false },
+    "android": {}
+  }
+}
