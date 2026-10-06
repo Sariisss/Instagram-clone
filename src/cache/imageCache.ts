@@ -46,7 +46,12 @@ class ImageCache {
    */
   acquire(url: string): { promise: Promise<string>; release: () => void } {
     const hit = this.ram.get(url);
-    if (hit) return { promise: Promise.resolve(hit), release() {} };
+    if (hit) {
+      // Actualizar last_access en disco en background para que el LRU de disco sea preciso
+      const key = hash(url);
+      getDb().then((db) => db.runAsync('UPDATE img_index SET last_access = ? WHERE key = ?', [Date.now(), key])).catch(() => {});
+      return { promise: Promise.resolve(hit), release() {} };
+    }
 
     let job = this.jobs.get(url);
     if (!job) {

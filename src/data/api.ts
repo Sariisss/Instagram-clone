@@ -28,10 +28,17 @@ export async function uploadImage(localUri: string, folder: 'posts' | 'stories' 
 export async function uploadVideo(localUri: string, mimeType = 'video/mp4') {
   const contentType = mimeType.startsWith('video/') ? mimeType : 'video/mp4';
   const extension = contentType === 'video/quicktime' ? 'mov' : contentType === 'video/x-m4v' ? 'm4v' : contentType.split('/')[1]?.split(';')[0] || 'mp4';
-  const buf = await (await fetch(localUri)).arrayBuffer();
   const path = `${uid()}/posts/${Crypto.randomUUID()}.${extension}`;
-  const { error } = await supabase.storage.from('media').upload(path, buf, { contentType, upsert: false });
-  if (error) throw error;
+  // Obtener la URL firmada de upload para hacer streaming directo (evita cargar todo en RAM)
+  const { data: uploadData, error: urlError } = await supabase.storage.from('media').createSignedUploadUrl(path);
+  if (urlError) throw urlError;
+  // FileSystem.uploadAsync hace streaming desde disco sin pasar por el heap de JS
+  const FileSystem = (await import('expo-file-system')).default ?? (await import('expo-file-system'));
+  const result = await (FileSystem as any).uploadAsync(uploadData.signedUrl, localUri, {
+    httpMethod: 'PUT',
+    headers: { 'Content-Type': contentType, 'x-upsert': 'false' },
+  });
+  if (result.status < 200 || result.status >= 300) throw new Error(`Upload failed: ${result.status}`);
   return path;
 }
 export async function createPost(localUri: string, caption: string, video = false, mimeType?: string | null) {

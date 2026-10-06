@@ -68,8 +68,19 @@ export default function StoryViewerScreen() {
         style={StyleSheet.absoluteFill}
         onPressIn={() => { pressedAt.current = Date.now(); anim.current?.stop(); }}
         onPressOut={(e) => {
-          if (Date.now() - pressedAt.current < 220) { e.nativeEvent.locationX < W / 3 ? prev() : next(); }
-          else run(value.current);
+          if (Date.now() - pressedAt.current < 220) {
+            if (e.nativeEvent.locationX < W / 3) {
+              const wentBack = i > 0 || g > 0;
+              prev();
+              // Si prev() no pudo retroceder (primera historia del primer grupo),
+              // reanudar la animación desde donde se pausó.
+              if (!wentBack) run(value.current);
+            } else {
+              next();
+            }
+          } else {
+            run(value.current);
+          }
         }}
       />
       <View pointerEvents="none" style={{ position: 'absolute', top: insets.top + 6, left: 8, right: 8 }}>
